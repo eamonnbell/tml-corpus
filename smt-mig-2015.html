@@ -13,7 +13,6 @@
       }
       h1, h2, h3 {
         font-weight: bold;
-        font-size: 75%;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
     </style>
@@ -22,7 +21,6 @@
     <textarea id="source">
 
 # Computational detection of text reuse in Latin music theory treatises 
-
 
 Work-in-progress report
 
@@ -35,25 +33,43 @@ St. Louis, MO
 
 ---
 
-# Introduction
+## Introduction
 
-- Side project 
+- Side project: Summer 2015
+
+--
+
 - NLP = natural language processing
+
 - computational study of natural language e.g. Spanish, Latin
-- Distant reading (Moretti) as a tactic for dealing with large volumes of text
+
+- **Distant reading** (Moretti) as a tactic for dealing with large volumes of text
+
+--
+
 - Needs a machine-readable transcribed corpus
+
 - TML = Thesaurus Musicarum Latinarum
     - http://www.chmtl.indiana.edu/tml/start.html
     - since 1990
+
+???
+
+- I am a third-year Ph.D. student at Columbia
+- Early days on this
+- Inspired partly of a group of DH at Columbia, xpmeth/Studio@Butler
+
 ---
 
-# Research question(s)
+## Research question(s)
 
 - **What phrases are reused, and by whom, in the TML?**
     - boilerplate (e.g. scale segments) - surprisingly hard
     - transcription errors - easy 
     - linguistic variation - harder
     - paraphrase - harder still (TESSERA)
+
+--
 
 - Which treatises are similar to each other?
     - according to a bunch of metrics/models
@@ -65,11 +81,13 @@ St. Louis, MO
 
 ---
 
-# Text reuse
+## Text reuse
 
 - How do you look for text reuse if you don't know what you're looking for? No _a priori_ knowledge of the reused memes.
 
-## Viral Texts: Mapping Networks of Reprinting in 19th-Century Newspapers and Magazines
+--
+
+### Viral Texts: Mapping Networks of Reprinting in 19th-Century Newspapers and Magazines
 
 - Ryan Cordell (Northeastern, English)
 - David Smith (Northeastern, CS)
@@ -82,7 +100,7 @@ St. Louis, MO
 
 ---
 
-# Methodology in short
+## Methodology in short
 
 1. (Break your texts in to sections)
 2. Turn every text in to a list of N-grams
@@ -91,6 +109,8 @@ St. Louis, MO
 5. Take the top K document pairs, ranked by this count
 6. Do **Smith-Waterman sequence alignment (SW)** on them
 7. Rank those K document alignments by their alignment scores
+
+--
 
 **October 2015**</br>
 Reimplemented the basic methodology described in Wilkerson, Smith and Tramp (2015).
@@ -103,16 +123,16 @@ The **Smith–Waterman** algorithm performs local sequence alignment; that is, f
 
 ---
 
-# Literal reuse heatmaps
+## Literal reuse heatmaps
 
 ---
 
-# Literal reuse fan diagram 
+## Alternative visualization (interactive)
 
 ---
 
-# Literal reuse network 1
-## Overview
+## Literal reuse network 1
+### Overview
 
 - Network of all borrowings of 5-grams (some filtering)
 - Each node is a treatise; each edge is weighted by the amount of sharing
@@ -121,8 +141,8 @@ The **Smith–Waterman** algorithm performs local sequence alignment; that is, f
 [IMAGE YO]
 ---
 
-# Literal reuse network 2
-## Specific example
+## Literal reuse network 2
+### Specific example
 
 Let's check out the provenance of the n-gram:
 
@@ -133,22 +153,29 @@ which appears 26 times in the corpus:
 ```
 JACSP4_501 / Jacobus Leodien / Speculum musica / 18 / 14th
 REGHAR_56 / Regino Prumiens / Epistola de har / 34 / 9th-11th
->> BOEMUS1_68 / Boethius, Anici / De institutione / 20 / 6th-8th <<
+BOEMUS1_68 / Boethius, Anici / De institutione / 20 / 6th-8th
 UGODEC5_118 / Ugolino Urbevet / Declaratio musi / 33 / 15th
-GUIENC_11 / Guillermus de P / Enchiridion de  / 34 / 15th
-MURMSPE_20 / Johannes de Mur / Musica speculat / 1 / 14th
 GODEC5_111 / Ugolino Urbevet / Declaratio musi / 30 / 15th
 [...]
 IERTRA1_286 / Ieronimus de Mo / Tractatus de mu / 17 / 13th
 REGDHI_55 / Regino Prumiens / De harmonica in / 33 / 9th-11th
 MURMSPEW_19 / Johannes de Mur / Musica speculat / 24 / 14th
-UGODEC1A_310 / Ugolino Urbevet / Declaratio musi / 4 / 15th
->> BOEDIM1_62 / Boethius, Anici / De institutione / 3 / 6th-8th <<
+BOEDIM1_62 / Boethius, Anici / De institutione / 3 / 6th-8th
 ```
 
+--
+
+> Consonantia est acuti soni gravisque mixtura suaviter uniformiterque auribus accidens. 
+> (Boethius, De Institutione Musica)
+
+???
+
+- Eco's translation: consonance is a mixture of high and low sounds striking the ear sweetly and uniformly
+- So this is concordance, right? Nothing all that new, people were doing this in the 60s/70s
+
 ---
-# Literal reuse network 3
-## Back to the overview, "Boethians" highlighted
+## Literal reuse network 3
+### Back to the overview, "Boethians" highlighted
 
 [IMAGE, YO]
 
@@ -158,7 +185,7 @@ I can concieve of a way in which the social network of treatises/authors could b
 
 ---
 
-# Some non-trivial* alignments from the corpus
+## Some non-trivial* alignments from the corpus
 
 Lots more work to do
 
@@ -169,28 +196,38 @@ code
 ```
 ---
 
-# Challenges (a.k.a. opportunities)
+## Challenges (a.k.a. opportunities)
 
 - Dating texts to establish chronological priority is intractable (assume).
-    - Maybe there's a sensible way to model these docs as a partially-ordered set
+
+--
+
 - n-gram implies a decision about n
+
+--
+
 - Detecting and handling:
     - boilerplate (e.g. scale segments) - surprisingly hard
     - 👍 transcription errors - easy (Smith-Waterman, up to a point)
     - paraphrase - harder still (TESSERA)
+--
+
 - SW is a dynamic programming algorithm with parameters
     - match, mismatch and gap penalties
     - in some ways like Levenshtein on speed
+
+--
 - 👍 Some methods are language agnostic
     - sort of: contrast Early Modern English orthography with contemporary English
     - TODO: Learn Latin
+--
 - What counts as a non-trivial (i.e. not boring) alignment?
 ???
 
 - Maybe there's a way to respect a partial ordering?
 
 ---
-# Links
+## Links
 
 Replicate: http://github.com/eamonnbell/tml-corpus
 
@@ -211,6 +248,20 @@ More about Viral Texts: http://viraltexts.org
 
 - GitHub has some iPython notebooks you can check out in the browser or download and run (no warranty)
 
+---
+
+### Document similarity in tf-idf space
+
+- Projection of BoW on to another vector space that is "aware" of inter document frequency
+- Basically a ranking of how important such a word is to a given documet, knowing some info about the rest of the corpus
+- Ward clustering (hierarchical clustering)
+- Represented on a dendrogram (close on the y-axis means high similarity)
+
+---
+
+background-image: url(dendro.png)
+
+[Link to image](
 ---
 
     </textarea>
