@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Awesome Presentation</title>
+    <title>Computational detection of text reuse in Latin music theory treatises</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      body { font-family: 'Droid Serif'; }
+      body {
+        font-family: 'Arial';
+      }
       h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
+        font-weight: bold;
+        font-size: 75%;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
     </style>
@@ -20,19 +22,196 @@
     <textarea id="source">
 
 # Computational detection of text reuse in Latin music theory treatises 
-## Eamonn Bell <epb2125@columbia.edu>
----
 
-# Agenda
 
-1. Introduction
-2. Deep-dive
-3. ...
+Work-in-progress report
 
-[NOTE]: This file is portable; you don't need any other file, or an internet connection for this presentation.
+Eamonn Bell</br>
+Columbia University</br>
+<epb2125@columbia.edu>
+
+SMT MIG 2015</br>
+St. Louis, MO
+
 ---
 
 # Introduction
+
+- Side project 
+- NLP = natural language processing
+- computational study of natural language e.g. Spanish, Latin
+- Distant reading (Moretti) as a tactic for dealing with large volumes of text
+- Needs a machine-readable transcribed corpus
+- TML = Thesaurus Musicarum Latinarum
+    - http://www.chmtl.indiana.edu/tml/start.html
+    - since 1990
+---
+
+# Research question(s)
+
+- **What phrases are reused, and by whom, in the TML?**
+    - boilerplate (e.g. scale segments) - surprisingly hard
+    - transcription errors - easy 
+    - linguistic variation - harder
+    - paraphrase - harder still (TESSERA)
+
+- Which treatises are similar to each other?
+    - according to a bunch of metrics/models
+
+- How does the distribution of topics change over time?
+    - language-agnostic methodologies: LSA, LDA
+
+- Your research question here.
+
+---
+
+# Text reuse
+
+- How do you look for text reuse if you don't know what you're looking for? No _a priori_ knowledge of the reused memes.
+
+## Viral Texts: Mapping Networks of Reprinting in 19th-Century Newspapers and Magazines
+
+- Ryan Cordell (Northeastern, English)
+- David Smith (Northeastern, CS)
+- Elizabeth Maddock Dillon, Kevin Smith, and Peter Roby
+- Exceptionally high-profile examination of reprinted "viral" texts in newspapers.
+
+???
+
+- Money-wise: Northeastern funding, $56,000 from the NEH, $500,000 from the Mellon Foundation (according to Cordell).
+
+---
+
+# Methodology in short
+
+1. (Break your texts in to sections)
+2. Turn every text in to a list of N-grams
+3. Make a reverse index of concordances for each N-gram
+4. Use this to count the number of shared N-grams for each pair of texts
+5. Take the top K document pairs, ranked by this count
+6. Do **Smith-Waterman sequence alignment (SW)** on them
+7. Rank those K document alignments by their alignment scores
+
+**October 2015**</br>
+Reimplemented the basic methodology described in Wilkerson, Smith and Tramp (2015).
+
+The **Smith–Waterman** algorithm performs local sequence alignment; that is, for determining similar regions between two strings or nucleotide or protein sequences.(en.wikipedia.org)
+
+???
+
+- Wilkerson, Smith and Tramp is the policy ideas paper but has a detailed appendix that I used to reconstruct their methodology
+
+---
+
+# Literal reuse heatmaps
+
+---
+
+# Literal reuse fan diagram 
+
+---
+
+# Literal reuse network 1
+## Overview
+
+- Network of all borrowings of 5-grams (some filtering)
+- Each node is a treatise; each edge is weighted by the amount of sharing
+- Node size ~ eigenvector centrality
+
+[IMAGE YO]
+---
+
+# Literal reuse network 2
+## Specific example
+
+Let's check out the provenance of the n-gram:
+
+> acuti soni gravisque mixtura suaviter
+
+which appears 26 times in the corpus:
+
+```
+JACSP4_501 / Jacobus Leodien / Speculum musica / 18 / 14th
+REGHAR_56 / Regino Prumiens / Epistola de har / 34 / 9th-11th
+>> BOEMUS1_68 / Boethius, Anici / De institutione / 20 / 6th-8th <<
+UGODEC5_118 / Ugolino Urbevet / Declaratio musi / 33 / 15th
+GUIENC_11 / Guillermus de P / Enchiridion de  / 34 / 15th
+MURMSPE_20 / Johannes de Mur / Musica speculat / 1 / 14th
+GODEC5_111 / Ugolino Urbevet / Declaratio musi / 30 / 15th
+[...]
+IERTRA1_286 / Ieronimus de Mo / Tractatus de mu / 17 / 13th
+REGDHI_55 / Regino Prumiens / De harmonica in / 33 / 9th-11th
+MURMSPEW_19 / Johannes de Mur / Musica speculat / 24 / 14th
+UGODEC1A_310 / Ugolino Urbevet / Declaratio musi / 4 / 15th
+>> BOEDIM1_62 / Boethius, Anici / De institutione / 3 / 6th-8th <<
+```
+
+---
+# Literal reuse network 3
+## Back to the overview, "Boethians" highlighted
+
+[IMAGE, YO]
+
+???
+
+I can concieve of a way in which the social network of treatises/authors could be "seeded" with cribs such as this: certain phrases acting as markers of intertextuality - i.e. `acuti soni` represents Boethian influence more generally.
+
+---
+
+# Some non-trivial* alignments from the corpus
+
+Lots more work to do
+
+
+```
+here's some preformatted
+code
+```
+---
+
+# Challenges (a.k.a. opportunities)
+
+- Dating texts to establish chronological priority is intractable (assume).
+    - Maybe there's a sensible way to model these docs as a partially-ordered set
+- n-gram implies a decision about n
+- Detecting and handling:
+    - boilerplate (e.g. scale segments) - surprisingly hard
+    - 👍 transcription errors - easy (Smith-Waterman, up to a point)
+    - paraphrase - harder still (TESSERA)
+- SW is a dynamic programming algorithm with parameters
+    - match, mismatch and gap penalties
+    - in some ways like Levenshtein on speed
+- 👍 Some methods are language agnostic
+    - sort of: contrast Early Modern English orthography with contemporary English
+    - TODO: Learn Latin
+- What counts as a non-trivial (i.e. not boring) alignment?
+???
+
+- Maybe there's a way to respect a partial ordering?
+
+---
+# Links
+
+Replicate: http://github.com/eamonnbell/tml-corpus
+
+You just need to (w)get your hands on the TML. Not computationally expensive; works great on my $250 laptop.
+
+My website: http://www.columbia.edu/~epb2125
+
+More about Viral Texts: http://viraltexts.org
+
+### Technology used
+
+- Python
+- scikit-learn
+- NLTK / CLTK 
+- gensim (topic modeling)
+
+???
+
+- GitHub has some iPython notebooks you can check out in the browser or download and run (no warranty)
+
+---
 
     </textarea>
     <script type="text/javascript">
