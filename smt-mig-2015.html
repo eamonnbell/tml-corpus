@@ -4,17 +4,17 @@
     <title>Computational detection of text reuse in Latin music theory treatises</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
       body {
         font-family: 'Arial';
       }
+      img {
+          max-width: 100%;
+      }
       h1, h2, h3 {
         font-weight: bold;
+        font-size: 80%;
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code, .remark-inline-code { font-family: courier; font-size:80%; }
     </style>
   </head>
   <body onload="var slideshow = remark.create();">
@@ -41,6 +41,8 @@ St. Louis, MO
 
 - NLP = natural language processing
 
+- **Text as data**
+
 - computational study of natural language e.g. Spanish, Latin
 
 - **Distant reading** (Moretti) as a tactic for dealing with large volumes of text
@@ -52,11 +54,12 @@ St. Louis, MO
 - TML = Thesaurus Musicarum Latinarum
     - http://www.chmtl.indiana.edu/tml/start.html
     - since 1990
+    - 807 texts scraped from the website and preprocessed
 
 ???
 
 - I am a third-year Ph.D. student at Columbia
-- Early days on this
+- Early days on this; feedback welcome
 - Inspired partly of a group of DH at Columbia, xpmeth/Studio@Butler
 
 ---
@@ -73,6 +76,7 @@ St. Louis, MO
 
 - Which treatises are similar to each other?
     - according to a bunch of metrics/models
+    - bonus slide deals with this
 
 - How does the distribution of topics change over time?
     - language-agnostic methodologies: LSA, LDA
@@ -96,6 +100,9 @@ St. Louis, MO
 
 ???
 
+- The main question
+- Of course we have some hunches about what's being reused in this corpus but what if we're missing something
+- Supervised vs. unsupervised; not exactly the same but analogous
 - Money-wise: Northeastern funding, $56,000 from the NEH, $500,000 from the Mellon Foundation (according to Cordell).
 
 ---
@@ -125,31 +132,43 @@ The **Smith–Waterman** algorithm performs local sequence alignment; that is, f
 
 ## Literal reuse heatmaps
 
+- 5-grams; reuses within a subcorpus of 75 (random sample)
+- "hot" indicates a 5-gram that appears in multiple texts
+
+<img src="heatmap.png">
 ---
 
-## Alternative visualization (interactive)
+## Alternative visualization 
+
+- Hive diagram done in d3.js might be useful (this is just an example)
+- Each "spoke" is a text; colored edges are instance of reuse
+- Interactivity: hover for concordances, more info...
+
+
+<img src="hive.png">
 
 ---
 
-background-image: url(19net.png)
-
-## Literal reuse networks 1
+## Literal reuse networks (1)
 ### Overview
 
+</br>
 [Link to image](19net.png)
 
-[Link to interactive]()
+[Link to interactive](graphs/19net/index.html)
+
+<img src="19net.png">
 
 ???
 
-- Network of all borrowings of 5-grams (>= 19 instances)
+- Network of all borrowings of 5-grams
 - Each node is a treatise
 - Node size ~ eigenvector centrality
 
 
 ---
 
-## Literal reuse network 2
+## Literal reuse networks (2)
 ### Specific example
 
 Let's check out the provenance of the n-gram:
@@ -184,10 +203,21 @@ BOEDIM1_62 / Boethius, Anici / De institutione / 3 / 6th-8th
 - So this is concordance, right? Nothing all that new, people were doing this in the 60s/70s
 
 ---
-## Literal reuse network 3
+
+background-image: url(subnet.png)
+
+## Literal reuse network (3)
 ### Back to the overview, "Boethians" highlighted
 
-[IMAGE, YO]
+</br>
+[Link to image](subnet.png)
+
+
+
+
+
+
+
 
 ???
 
@@ -195,13 +225,38 @@ I can concieve of a way in which the social network of treatises/authors could b
 
 ---
 
-## Some non-trivial* alignments from the corpus
+## Some non-trivial* alignments from the corpus (1)
 
-Lots more work to do
 
 ```
-here's some preformatted
-code
+('MUSENCH_33' , 'ANOINC_41')
+
+non omnes aeque suaviter sibi miscentur---, --nec quoquo modo junctae   
+non omnes aeque suaviter sibi miscentur nec omnes quoquo-modo iunctae
+
+
+('VINSPE_123', 'ISIDEM_24')
+
+metallico rigore percussa reddunt cum suavitate tinnitum- et c-etera huiuscemodi.
+metallico rigore percussa reddunt cum suavitate tinnitum, et caetera hujus--modi.
+```
+---
+## Some non-trivial* alignments from the corpus (2)
+
+- Remember: no a priori knowledge of the concordance being aligned
+- You just align as many candidate pairs as you have resources to do
+
+```
+('GUEUT_76', 'MURMSP_19')        
+
+[A] est dissimilium inter se vocum in vnum redacta.
+[B] est dissimilium inter se vocum in unum redacta s
+ 
+[A] Item ----beatus Gregorius -Consonantia est acut--
+[B] imul concordia", vel sic: "Consonantia est acuti 
+
+[A] ---i grauisque mixtura ---v------niformiter--- auribus accidens.
+[B] soni gravisque mixtura suaviter uniformiterque auribus accidens.  
 ```
 ---
 
@@ -219,19 +274,18 @@ code
     - boilerplate (e.g. scale segments) - surprisingly hard
     - 👍 transcription errors - easy (Smith-Waterman, up to a point)
     - paraphrase - harder still (TESSERA)
+        - sesquitercia, sesquitertia
+        - sexquitertia
+        - IV:III, 4:3, quatuor ad tres
+        - epitritica...
 --
 
 - SW is a dynamic programming algorithm with parameters
-    - match, mismatch and gap penalties
-    - in some ways like Levenshtein on speed
 
 --
 - 👍 Some methods are language agnostic
-    - sort of: contrast Early Modern English orthography with contemporary English
     - TODO: Learn Latin
 
---
-- What counts as a non-trivial (i.e. not boring) alignment?
 ???
 
 - Maybe there's a way to respect a partial ordering?
@@ -262,9 +316,14 @@ More about Viral Texts: http://viraltexts.org
 
 ### Document similarity in tf-idf space
 
-- Projection of BoW on to another vector space that is "aware" of inter document frequency
+- 15C treatises; size > 25k chars
+
+- Projection of bag of words on to another vector space that is "aware" of inter document frequency (tf-idf)
+
 - Basically a ranking of how important such a word is to a given documet, knowing some info about the rest of the corpus
+
 - Ward clustering (hierarchical clustering)
+
 - Represented on a dendrogram (close on the y-axis means high similarity)
 
 ---
