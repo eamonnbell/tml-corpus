@@ -131,14 +131,22 @@ The **Smith–Waterman** algorithm performs local sequence alignment; that is, f
 
 ---
 
-## Literal reuse network 1
+background-image: url(19net.png)
+
+## Literal reuse networks 1
 ### Overview
 
-- Network of all borrowings of 5-grams (some filtering)
-- Each node is a treatise; each edge is weighted by the amount of sharing
+[Link to image](19net.png)
+
+[Link to interactive]()
+
+???
+
+- Network of all borrowings of 5-grams (>= 19 instances)
+- Each node is a treatise
 - Node size ~ eigenvector centrality
 
-[IMAGE YO]
+
 ---
 
 ## Literal reuse network 2
@@ -148,9 +156,11 @@ Let's check out the provenance of the n-gram:
 
 > acuti soni gravisque mixtura suaviter
 
-which appears 26 times in the corpus:
+which appears 26 times in the sectionalized corpus:
 
 ```
+SECTION_ID / AUTHOR / TITLE / POSITION / CENTURY
+================================================
 JACSP4_501 / Jacobus Leodien / Speculum musica / 18 / 14th
 REGHAR_56 / Regino Prumiens / Epistola de har / 34 / 9th-11th
 BOEMUS1_68 / Boethius, Anici / De institutione / 20 / 6th-8th
@@ -189,7 +199,6 @@ I can concieve of a way in which the social network of treatises/authors could b
 
 Lots more work to do
 
-
 ```
 here's some preformatted
 code
@@ -220,6 +229,7 @@ code
 - 👍 Some methods are language agnostic
     - sort of: contrast Early Modern English orthography with contemporary English
     - TODO: Learn Latin
+
 --
 - What counts as a non-trivial (i.e. not boring) alignment?
 ???
@@ -229,11 +239,11 @@ code
 ---
 ## Links
 
-Replicate: http://github.com/eamonnbell/tml-corpus
+Replicate and this presentation: http://github.com/eamonnbell/tml-corpus
 
 You just need to (w)get your hands on the TML. Not computationally expensive; works great on my $250 laptop.
 
-My website: http://www.columbia.edu/~epb2125
+http://www.columbia.edu/~epb2125
 
 More about Viral Texts: http://viraltexts.org
 
@@ -261,7 +271,7 @@ More about Viral Texts: http://viraltexts.org
 
 background-image: url(dendro.png)
 
-[Link to image](
+[Link to image](dendro.png)
 ---
 
     </textarea>
