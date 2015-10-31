@@ -213,12 +213,6 @@ background-image: url(subnet.png)
 [Link to image](subnet.png)
 
 
-
-
-
-
-
-
 ???
 
 I can concieve of a way in which the social network of treatises/authors could be "seeded" with cribs such as this: certain phrases acting as markers of intertextuality - i.e. `acuti soni` represents Boethian influence more generally.
@@ -227,16 +221,24 @@ I can concieve of a way in which the social network of treatises/authors could b
 
 ## Some non-trivial* alignments from the corpus (1)
 
-
-```
 ('MUSENCH_33' , 'ANOINC_41')
 
+_Musica Enchiriadis_ 
+
+_Inchiriadon Uchubaldi Francigena_
+
+```
 non omnes aeque suaviter sibi miscentur---, --nec quoquo modo junctae   
 non omnes aeque suaviter sibi miscentur nec omnes quoquo-modo iunctae
-
+```
 
 ('VINSPE_123', 'ISIDEM_24')
 
+Vincent of Beauvais, _Speculum doctrinale_ (13C)
+
+Isidore (of Seville), _De musica_ (6-8C)
+
+```
 metallico rigore percussa reddunt cum suavitate tinnitum- et c-etera huiuscemodi.
 metallico rigore percussa reddunt cum suavitate tinnitum, et caetera hujus--modi.
 ```
@@ -246,12 +248,15 @@ metallico rigore percussa reddunt cum suavitate tinnitum, et caetera hujus--modi
 - Remember: no a priori knowledge of the concordance being aligned
 - You just align as many candidate pairs as you have resources to do
 
-```
 ('GUEUT_76', 'MURMSP_19')        
 
+[A] Guillaume Guerson, _Utillissime musicales regule_ (15C)</br>
+[B] Johannes de Muris, _Musica speculativa_ (14C)
+
+```
 [A] est dissimilium inter se vocum in vnum redacta.
 [B] est dissimilium inter se vocum in unum redacta s
- 
+
 [A] Item ----beatus Gregorius -Consonantia est acut--
 [B] imul concordia", vel sic: "Consonantia est acuti 
 
@@ -277,7 +282,7 @@ metallico rigore percussa reddunt cum suavitate tinnitum, et caetera hujus--modi
         - sesquitercia, sesquitertia
         - sexquitertia
         - IV:III, 4:3, quatuor ad tres
-        - epitritica...
+        - epitritica... 
 --
 
 - SW is a dynamic programming algorithm with parameters
@@ -289,13 +294,16 @@ metallico rigore percussa reddunt cum suavitate tinnitum, et caetera hujus--modi
 ???
 
 - Maybe there's a way to respect a partial ordering?
+- s/o to Caleb Mutch
 
 ---
 ## Links
 
 Replicate and this presentation: http://github.com/eamonnbell/tml-corpus
 
-You just need to (w)get your hands on the TML. Not computationally expensive; works great on my $250 laptop.
+You just need to (w)get your hands on the TML.
+
+SW on this scale is not computationally expensive; works great on my $250 laptop.
 
 http://www.columbia.edu/~epb2125
 
@@ -306,7 +314,6 @@ More about Viral Texts: http://viraltexts.org
 - Python
 - scikit-learn
 - NLTK / CLTK 
-- gensim (topic modeling)
 
 ???
 
@@ -320,7 +327,7 @@ More about Viral Texts: http://viraltexts.org
 
 - Projection of bag of words on to another vector space that is "aware" of inter document frequency (tf-idf)
 
-- Basically a ranking of how important such a word is to a given documet, knowing some info about the rest of the corpus
+- Basically a ranking of how important such a word is to a given document, knowing some info about the rest of the corpus
 
 - Ward clustering (hierarchical clustering)
 
